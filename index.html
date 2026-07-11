@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>// THE INDEX DEVICE MASS-PRODUCED PROTOTYPE //</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="scanlines"></div>
+
+  <main class="page">
+    <header class="page__header">
+      <span class="page__tag">// THE INDEX DEVICE MASS-PRODUCED PROTOTYPE //</span>
+      <h1 class="page__title">
+        <img class="page__title-icon-img" src="src/images/The_Index_Logo.png" alt="">
+        PRESCRIPT<span class="page__title-dim">.exe</span>
+      </h1>
+      <p class="page__sub">Do not question, The Prescript knows best.</p>
+    </header>
+
+    <section class="panel panel--subjects" aria-label="Subjects">
+      <div class="panel__head">
+        <h2 class="panel__title"><span class="panel__index">01</span> Subjects</h2>
+        <span class="panel__count" id="subjectCount">0 / 7</span>
+      </div>
+
+      <ul class="subject-list" id="subjectList" role="list"></ul>
+
+      <form class="subject-form" id="subjectForm">
+        <input
+          type="text"
+          id="subjectInput"
+          class="subject-form__input"
+          placeholder="add a subject…"
+          maxlength="40"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn--ghost" id="subjectAdd">add</button>
+      </form>
+      <p class="panel__hint" id="subjectHint">&nbsp;</p>
+    </section>
+
+    <section class="panel panel--templates" aria-label="Templates">
+      <div class="panel__head">
+        <h2 class="panel__title"><span class="panel__index">02</span> Directive</h2>
+      </div>
+      <div class="template-grid" id="templateGrid" role="radiogroup"></div>
+    </section>
+
+    <section class="panel panel--output" aria-label="Output">
+      <div class="panel__head">
+        <h2 class="panel__title"><span class="panel__index">03</span> Output</h2>
+        <button class="btn btn--solid" id="generateBtn">decrypt</button>
+      </div>
+      <div class="readout" id="readout">
+        <span class="readout__cursor">awaiting input&nbsp;</span>
+      </div>
+      <div class="submit-row" id="submitRow" aria-hidden="true">
+        <button class="btn btn--submit" id="submitBtn" disabled>submit order</button>
+      </div>
+      <div class="order-meta" id="orderMeta" aria-hidden="true">
+        <span class="order-meta__tag">PROTOCOL EXECUTED</span>
+        <span class="order-meta__timestamp" id="orderTimestamp"></span>
+        <button class="btn btn--ghost order-meta__new" id="newOrderBtn">new order</button>
+      </div>
+    </section>
+
+    <footer class="page__footer">
+      stored locally. nothing leaves this device.
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
