@@ -44,7 +44,50 @@
       </form>
       <p class="panel__hint" id="subjectHint">&nbsp;</p>
     </section>
+    
+<!-- CODE GATE (new step 01.5) -->
+<section class="panel panel--gate" aria-label="Access code">
+  <div class="panel__head">
+    <h2 class="panel__title"><span class="panel__index">01.5</span> Access Code</h2>
+    <span class="gate__status" id="gateStatus">locked</span>
+  </div>
+  <form class="subject-form" id="gateForm">
+    <input
+      type="password"
+      id="gateInput"
+      class="subject-form__input gate__input"
+      placeholder="enter access code…"
+      maxlength="24"
+      autocomplete="off"
+    />
+    <button type="submit" class="btn btn--ghost" id="gateSubmit">unlock</button>
+  </form>
+  <p class="panel__hint" id="gateHint">&nbsp;</p>
+</section>
 
+<!-- OBJECT step (new step 02.5, goes between templates and output) -->
+<section class="panel panel--object" aria-label="Object">
+  <div class="panel__head">
+    <h2 class="panel__title"><span class="panel__index">02.5</span> Object</h2>
+  </div>
+  <p class="panel__hint">Specify a tool or object used to carry out the directive.</p>
+  <form class="subject-form" id="objectForm">
+    <input
+      type="text"
+      id="objectInput"
+      class="subject-form__input"
+      placeholder="e.g. a red pen, a mirror…"
+      maxlength="40"
+      autocomplete="off"
+    />
+    <button type="submit" class="btn btn--ghost" id="objectSet">set</button>
+  </form>
+  <div class="object-chip" id="objectChip" aria-hidden="true">
+    <span class="object-chip__label" id="objectLabel"></span>
+    <button type="button" class="subject-chip__remove" id="objectClear" aria-label="clear object">×</button>
+  </div>
+</section>
+  <div class="gate__locked-content" id="gateLockedContent" aria-hidden="true"></div>
     <section class="panel panel--templates" aria-label="Templates">
       <div class="panel__head">
         <h2 class="panel__title"><span class="panel__index">02</span> Directive</h2>
@@ -69,7 +112,7 @@
         <button class="btn btn--ghost order-meta__new" id="newOrderBtn">new order</button>
       </div>
     </section>
-
+  </div>
     <footer class="page__footer">
       stored locally. nothing leaves this device.
     </footer>

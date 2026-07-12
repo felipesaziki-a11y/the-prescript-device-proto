@@ -171,6 +171,52 @@ body {
   color: #334d5e;
   min-height: 16px;
 }
+.gate__status {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(189, 0, 0);
+  transition: color 260ms ease;
+
+  &.is-unlocked { color: #29b6f6; }
+}
+
+.gate__input {
+  letter-spacing: 0.18em;
+  font-size: 14px;
+}
+
+.gate__locked-content {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 360ms ease, transform 360ms ease;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+.object-chip {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  background: bg-raised;
+  border: 1px solid $line;
+  padding: 7px 8px 7px 12px;
+  width: fit-content;
+  animation: chip-in 220ms ease-out;
+
+  &.is-visible { display: inline-flex; }
+
+  &__label {
+    font-size: 13px;
+    color: $ink;
+  }
+}
 .panel__hint.is-error {
   color: #29b6f6;
 }

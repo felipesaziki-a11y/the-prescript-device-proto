@@ -1,4 +1,5 @@
 "use strict";
+const TEMPLATES = CODE_TEMPLATES['SIGMA'];
 const STORAGE_KEY = 'decryption-protocol.v1';
 const MAX_SUBJECTS = 7;
 const DEFAULT_SUBJECTS = [
@@ -7,11 +8,23 @@ const DEFAULT_SUBJECTS = [
     'a stranger',
     'the streetlight',
 ];
-const TEMPLATES = [
-    'Hit an enemy with a marked Skill or hit {subject} with a marked Skill.',
-    'Hit a target with a marked Skill.',
-    'Hit a target with a cost 3 Skill or with an EGO Skill.',
-];
+const CODE_TEMPLATES = {
+  'SIGMA': [
+    'Stare at {subject} using {object} for 40 minutes.',
+    'Leave {object} beside {subject} without explanation.',
+    'Count every {subject} you find, marking each with {object}.',
+  ],
+  'DELTA': [
+    'Deliver {object} to {subject} before midnight.',
+    'Describe {subject} in writing with only {object} as reference.',
+    'Place {object} where {subject} will notice it tomorrow.',
+  ],
+  'OMEGA': [
+    'Photograph {subject} reflected through {object}.',
+    'Burn a note about {subject} — use {object} to hold the ash.',
+    'Walk past {subject} carrying {object} and do not look back.',
+  ],
+};
 const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#$%&~01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 // ──────────────────────────────────────────────
 // Persistence
@@ -30,7 +43,8 @@ function loadState() {
             parsed.templateIndex < TEMPLATES.length
             ? parsed.templateIndex
             : 0;
-        return { subjects, templateIndex };
+        return { activeCode:   typeof parsed.activeCode === 'string' ? parsed.activeCode : '',
+activeObject: typeof parsed.activeObject === 'string' ? parsed.activeObject : '', };
     }
     catch (_a) {
         return { subjects: DEFAULT_SUBJECTS.slice(), templateIndex: 0 };
@@ -163,7 +177,7 @@ function removeSubject(index) {
 // ──────────────────────────────────────────────
 function renderTemplates() {
     templateGridEl.innerHTML = '';
-    TEMPLATES.forEach((template, index) => {
+    getActiveTemplates().forEach((template, index) => {
         const label = document.createElement('label');
         label.className = 'template-card';
         label.classList.toggle('is-selected', index === state.templateIndex);
@@ -188,6 +202,48 @@ function renderTemplates() {
         label.appendChild(text);
         templateGridEl.appendChild(label);
     });
+}
+// ── Gate ──────────────────────────────────────
+function unlockCode(raw) {
+  const code = raw.trim().toUpperCase();
+  if (!CODE_TEMPLATES[code]) {
+    gateHintEl.textContent = 'unknown code.';
+    gateHintEl.classList.add('is-error');
+    return;
+  }
+  state.activeCode = code;
+  saveState(state);
+  gateHintEl.textContent = '\u00A0';
+  gateHintEl.classList.remove('is-error');
+  gateStatusEl.textContent = `unlocked — ${code}`;
+  gateStatusEl.classList.add('is-unlocked');
+  gateLockedContentEl.classList.add('is-visible');
+  gateLockedContentEl.setAttribute('aria-hidden', 'false');
+  // Re-render templates for the new code
+  renderTemplates();
+}
+
+function getActiveTemplates() {
+  return CODE_TEMPLATES[state.activeCode] || [];
+}
+
+// ── Object ────────────────────────────────────
+function setObject(raw) {
+  const value = raw.trim();
+  if (!value) return;
+  state.activeObject = value;
+  saveState(state);
+  objectLabelEl.textContent = value;
+  objectChipEl.classList.add('is-visible');
+  objectChipEl.setAttribute('aria-hidden', 'false');
+}
+
+function clearObject() {
+  state.activeObject = '';
+  saveState(state);
+  objectChipEl.classList.remove('is-visible');
+  objectChipEl.setAttribute('aria-hidden', 'true');
+  objectInputEl.value = '';
 }
 // ──────────────────────────────────────────────
 // Decryption text effect
